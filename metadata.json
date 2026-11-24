@@ -1,0 +1,6 @@
+{
+  "name": "VidGenAI Studio",
+  "description": "Aplikasi studio pembuatan video dan gambar AI all-in-one (Text-to-Video, Image-to-Video, Image Studio, Script & Storyboard, Voiceover TTS, Auto Subtitle, dan Editor).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated VidGenAI Studio user profile, subscription tier, credit balance, and UI preferences.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID matching document ID." },
+        "displayName": { "type": "string", "description": "User display name." },
+        "email": { "type": "string", "description": "User email address (owner-only PII)." },
+        "planTier": { "type": "string", "enum": ["FREE", "PRO", "UNLIMITED"], "description": "Active creator tier." },
+        "credits": { "type": "integer", "description": "Remaining studio credits." },
+        "totalGenerations": { "type": "integer", "description": "Lifetime generation counter." },
+        "preferredLanguage": { "type": "string", "enum": ["id", "en"], "description": "UI language preference." },
+        "darkTheme": { "type": "boolean", "description": "Whether dark mode is enabled." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update." }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "email",
+        "planTier",
+        "credits",
+        "totalGenerations",
+        "preferredLanguage",
+        "darkTheme",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StudioProject": {
+      "title": "StudioProject",
+      "description": "AI video, image, script, or voiceover project created by a user in VidGenAI Studio.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "title": { "type": "string", "description": "Project title." },
+        "projectType": {
+          "type": "string",
+          "enum": ["TEXT_TO_VIDEO", "IMAGE_TO_VIDEO", "IMAGE_GEN", "IMAGE_EDIT", "SCRIPT", "VOICEOVER"],
+          "description": "Generation workflow type."
+        },
+        "prompt": { "type": "string", "description": "Original prompt or topic." },
+        "enhancedPrompt": { "type": "string", "description": "Optional AI-enhanced prompt." },
+        "style": { "type": "string", "description": "Selected visual or voice style." },
+        "aspectRatio": { "type": "string", "enum": ["16:9", "9:16", "1:1"], "description": "Media aspect ratio." },
+        "resolution": { "type": "string", "enum": ["360p", "720p", "1080p", "1K"], "description": "Output resolution." },
+        "status": { "type": "string", "enum": ["QUEUED", "PROCESSING", "COMPLETED", "FAILED"], "description": "Job status." },
+        "creditCost": { "type": "integer", "description": "Credits consumed by this project." },
+        "localMediaPath": { "type": "string", "description": "On-device file path for rendered media." },
+        "interactionId": { "type": "string", "description": "Gemini Interactions API interaction ID for multi-turn video editing." },
+        "scriptJson": { "type": "string", "description": "Structured JSON storyboard/script payload." },
+        "subtitlesJson": { "type": "string", "description": "Structured JSON subtitle segments payload." },
+        "errorMessage": { "type": "string", "description": "Failure reason if status is FAILED." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update." }
+      },
+      "required": [
+        "userId",
+        "title",
+        "projectType",
+        "prompt",
+        "style",
+        "aspectRatio",
+        "resolution",
+        "status",
+        "creditCost",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Per-user profile, credits, and studio preferences."
+    },
+    "/users/{userId}/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/StudioProject" },
+      "description": "Per-user AI video, image, script, and voiceover projects."
+    }
+  }
+}

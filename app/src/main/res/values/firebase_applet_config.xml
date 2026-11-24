@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="firestore_database_id" translatable="false">ai-studio-android-vidgenai-f1be1334-b3d6-4f1e-9e51-1846d4ed8771</string>
+    <string name="recaptcha_site_key" translatable="false">6Le2yy8uAAAAAOriJmTR_kLh9EbG3GZ_pzKqIXEj</string>
+</resources>
